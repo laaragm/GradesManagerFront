@@ -3,7 +3,8 @@
 		<v-app-bar app color="primary" dark>
 			<v-tabs centered>
 				<v-tab key="home" to="/"> Home </v-tab>
-				<v-tab key="analysis" to="/performanceAnalysis"> Analysis </v-tab>
+				<v-tab key="analysis" to="/performanceAnalysis"> Statistical Analysis </v-tab>
+				<v-tab key="studentPerformance" to="/studentPerformance"> Student Performance </v-tab>
 			</v-tabs>
 		</v-app-bar>
 		<v-main>

@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
+import HighchartsVue from 'highcharts-vue'
+
 
 Vue.use(VueRouter);
+Vue.use(HighchartsVue);
 
 const routes: Array<RouteConfig> = [
 	{
@@ -13,7 +16,12 @@ const routes: Array<RouteConfig> = [
 	{
 		path: '/performanceAnalysis',
 		name: 'Analysis',
-		component: () => import('../views/Analysis.vue')
+		component: () => import('../views/StatisticalAnalysis.vue')
+	},
+	{
+		path: '/studentPerformance',
+		name: 'StudentPerformance',
+		component: () => import('../views/StudentPerformance.vue')
 	}
 ]
 
