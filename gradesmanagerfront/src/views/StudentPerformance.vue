@@ -1,12 +1,15 @@
 <template>
 	<div>
-		{{studentsPerformance}}
-		<v-row no-gutters class="justify-center mt-10">
-			<v-col cols=6>
+		<v-row no-gutters class="justify-center mt-10" v-for="student in studentsPerformance" :key="student.studentID">
+			{{ student }}
+			<v-col cols=6 class="mt-5">
 				<v-card elevation=3>
 					<RadarChart 
-						:title="'Radar chart'" 
-						:data="studentsPerformance" 
+						:title="'Student Performance'" 
+						:values="Object.values(student.gradeAverageByLevel)"
+						:label="student.studentName"
+						:startPoint="getFirstLevel(student)"
+						:lastPoint="getLastLevel(student)"
 					/>
 				</v-card>
 			</v-col>
@@ -18,6 +21,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Action } from 'vuex-class'
 import RadarChart from '../components/RadarChart.vue'
+import { Level } from '../enums/Level'
 
 @Component({
 	components: {
@@ -28,6 +32,17 @@ export default class StudentPerformance extends Vue{
 	@Action getStudentsPerformance!: (studentsDTO: any) => Promise<any>
 
 	studentsPerformance = null;
+
+	getFirstLevel(student: any) {
+		const level = Object.keys(student.gradeAverageByLevel);
+		return Level[level[0]];
+	}
+
+	getLastLevel(student: any) {
+		const level = Object.keys(student.gradeAverageByLevel);
+		const size = level.length;
+		return Level[level[size-1]];
+	}
 
 	async mounted() {
 		const studentsDTO = {

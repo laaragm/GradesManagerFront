@@ -9,43 +9,46 @@ import Vue from 'vue'
 import { Prop, Watch } from 'vue-property-decorator'
 import * as Highcharts from 'highcharts'
 import Component from 'vue-class-component'
+import highchartsMore from 'highcharts/highcharts-more'
+
+highchartsMore(Highcharts)
 
 @Component
 export default class RadarChart extends Vue {
 	@Prop() title!: string;
-	@Prop() data!: any;
+	@Prop() values!: any;
+	@Prop() label!: string;
+	@Prop() startPoint!: number;
+	@Prop() lastPoint!: number;
 
 	mounted() {
 		this.build();
 	}
 
-	@Watch('data')
+	@Watch('values')
 	rebuildOnChange() {
 		this.build();
 	}
 
 	build() {
 		const highcharts = Highcharts as any;
-		highcharts.chart('title', {
+		highcharts.chart(this.title, {
 			chart: {
 				polar: true
 			},
 			title: {
-				text: 'Highcharts Polar Chart'
-			},
-			subtitle: {
-				text: 'Also known as Radar Chart'
+				text: this.title
 			},
 			pane: {
 				startAngle: 0,
 				endAngle: 360
 			},
 			xAxis: {
-				tickInterval: 45,
-				min: 0,
-				max: 360,
+				tickInterval: 1,
+				min: this.startPoint,
+				max: this.lastPoint + 1,
 				labels: {
-					format: '{value}°'
+					format: 'Year {value}'
 				}
 			},
 			yAxis: {
@@ -53,30 +56,18 @@ export default class RadarChart extends Vue {
 			},
 			plotOptions: {
 				series: {
-					pointStart: 0,
-					pointInterval: 45
+					pointStart: this.startPoint,
+					pointInterval: 1
 				},
 				column: {
 					pointPadding: 0,
 					groupPadding: 0
 				}
 			},
-			series: [
-			{
-				type: 'column',
-				name: 'Column',
-				data: [8, 7, 6, 5, 4, 3, 2, 1],
-				pointPlacement: 'between'
-			}, 
-			{
+			series: [{
 				type: 'line',
-				name: 'Line',
-				data: [1, 2, 3, 4, 5, 6, 7, 8]
-			},
-			{
-				type: 'area',
-				name: 'Area',
-				data: [1, 8, 2, 7, 3, 6, 4, 5]
+				name: this.label,
+				data: this.values
 			}]
 		});
 	}
