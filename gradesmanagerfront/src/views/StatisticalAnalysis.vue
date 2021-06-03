@@ -50,8 +50,8 @@ export default class StatisticalAnalysis extends Vue {
 	@Action getGradeAverageBySchoolLevels!: (schoolID: number) => Promise<any>
 	@Action getStudentCountPerLevel!: (schoolID: number) => Promise<any>
 
-	gradeAverage = null;
-	studentCountPerLevel = null;
+	gradeAverage!: any;
+	studentCountPerLevel!: any;
 	schoolId = 5;
 	loading = false;
 

@@ -60,22 +60,22 @@ export default class Home extends Vue{
 	@Action getDisciplinesGradeAverage!: (schoolID: number) => Promise<Array<XyChart>>
 	@Action getGradeAverageBySchoolLevels!: (schoolID: number) => Promise<any>
 
-	gradeAverageByLevel = null;
-	allSchools = null;
-	school = null;
+	gradeAverageByLevel!: any;
+	allSchools!: any;
+	school!: any;
 	classrooms = null;
 	loading = false;
-	students = null;
+	students!: any;
 	disciplinesGradeAverage = null;
 	
 	async mounted() {
 		this.loading = true;
 		this.allSchools = await this.getSchools();
 		this.school = this.allSchools[0];
-		this.classrooms = await this.getClassroomsFromSchool(this.school.id);
+		this.classrooms = await this.getClassroomsFromSchool(this.school?.id);
 		this.students = await this.getStudents();
-		this.disciplinesGradeAverage = await this.getDisciplinesGradeAverage(this.school.id);
-		this.gradeAverageByLevel = await this.getGradeAverageBySchoolLevels(this.school.id);
+		this.disciplinesGradeAverage = await this.getDisciplinesGradeAverage(this.school?.id);
+		this.gradeAverageByLevel = await this.getGradeAverageBySchoolLevels(this.school?.id);
 		this.loading = false;
 	}
 
@@ -84,7 +84,7 @@ export default class Home extends Vue{
 	}
 
 	getNumberOfStudents() {
-		return this.students.length;
+		return this.students?.length;
 	}
 }
 </script>

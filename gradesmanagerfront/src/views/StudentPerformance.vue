@@ -51,11 +51,11 @@ export default class StudentPerformance extends Vue{
 	@Action getStudentsPerformance!: (studentsDTO: any) => Promise<any>
 	@Action getStudents!: () => Promise<Array<Student>>
 
-	studentsPerformance = null;
-	students = null;
-	selectedStudent = null;
+	studentsPerformance!: any;
+	students!: any;
+	selectedStudent!: any;
 	school = 5;
-	studentRadioGroup = null;
+	studentRadioGroup!: any;
 	loading = false;
 
 	@Watch('studentRadioGroup')
@@ -91,10 +91,10 @@ export default class StudentPerformance extends Vue{
 		this.selectedStudent = this.studentsPerformance[0];
 	}
 
-	getLevels(student) {
+	getLevels(student: Student) {
 		const start = this.getFirstLevel(student);
 		const end = this.getLastLevel(student);
-		var data = []
+		var data = new Array<any>();
 		for (let i = start; i < end; i++) {
 			data.push(i);
 		}
