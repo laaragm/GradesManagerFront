@@ -22,7 +22,7 @@
 						:startPoint="getFirstLevel(selectedStudent)"
 						:lastPoint="getLastLevel(selectedStudent)"
 						:color="'#664EAE'"
-						height="500"
+						class="pt-5"
 					/>			
 				</v-card>
 			</v-col>
