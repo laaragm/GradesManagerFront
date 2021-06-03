@@ -30,13 +30,7 @@
 				</v-col>
 			</v-row>
 		</div>
-		<v-progress-circular
-			v-else
-			indeterminate
-			color="#664EAE"
-			size="70"
-			class="centralize"
-		></v-progress-circular>
+		<CircularLoading v-else color="#664EAE" size="70" />
 	</div>
 </template>
 
@@ -44,10 +38,12 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Action } from 'vuex-class'
 import CustomChart from '../components/CustomChart.vue'
+import CircularLoading from '../components/CircularLoading.vue'
 
 @Component({
 	components: {
-		CustomChart
+		CustomChart,
+		CircularLoading
 	}
 })
 export default class StatisticalAnalysis extends Vue {

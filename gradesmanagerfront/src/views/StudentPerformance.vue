@@ -27,13 +27,7 @@
 				</v-card>
 			</v-col>
 		</v-row>
-		<v-progress-circular
-			v-else
-			indeterminate
-			color="#664EAE"
-			size="70"
-			class="loading"
-		></v-progress-circular>
+		<CircularLoading v-else color="#664EAE" size="70" />
 	</div>
 </template>
 
@@ -43,12 +37,14 @@ import { Action } from 'vuex-class'
 import RadarChart from '../components/RadarChart.vue'
 import { Level } from '../enums/Level'
 import CustomChart from '../components/CustomChart.vue'
+import CircularLoading from '../components/CircularLoading.vue'
 import { Student } from '../models/Student'
 
 @Component({
 	components: {
 		RadarChart,
-		CustomChart
+		CustomChart,
+		CircularLoading
 	}
 })
 export default class StudentPerformance extends Vue{

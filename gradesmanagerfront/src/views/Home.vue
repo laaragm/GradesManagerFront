@@ -103,13 +103,7 @@
 				</v-card>
 			</v-col>
 		</v-row>
-		<v-progress-circular
-			v-else
-			indeterminate
-			color="#664EAE"
-			size="70"
-			class="centralize"
-		></v-progress-circular>
+		<CircularLoading v-else color="#664EAE" size="70" />
 	</div>
 </template>
 
@@ -122,10 +116,12 @@ import { Student } from '../models/Student'
 import { XyChart } from '../models/XyChart'
 import { Level } from '../enums/Level'
 import CustomChart from '../components/CustomChart.vue'
+import CircularLoading from '../components/CircularLoading.vue'
 
 @Component({
 	components: {
-		CustomChart
+		CustomChart,
+		CircularLoading
 	}
 })
 export default class Home extends Vue{
