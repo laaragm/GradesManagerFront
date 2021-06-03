@@ -9,6 +9,7 @@
 						:xAxis="Object.keys(gradeAverage)" 
 						:type="'column'" 
 					/>
+					<!-- TODO: Possibilidade do cara escolher se ele quer um bar chart, column, line (é só trocar o type) -->
 				</v-card>
 			</v-col>
 		</v-row>

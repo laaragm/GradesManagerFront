@@ -11,5 +11,17 @@ export const actions: ActionTree<GradesManagerState, RootState> = {
 	async getStudentsPerformance({ commit }, studentsDTO: any): Promise<any> {
 		const response = await api.post("/PerformanceAnalysis/analyseStudentsPerformance", studentsDTO);
 		return response.data;
-	}
+	},
+	async getSchools({ commit }): Promise<any> {
+		const response = await api.get("/Schools");
+		return response.data;
+	},
+	async getClassroomsFromSchool({ commit }, schoolID: number): Promise<any> {
+		const response = await api.get(`/Classrooms/bySchool/${schoolID}`);
+		return response.data;
+	},
+	async getStudents({ commit }): Promise<any> {
+		const response = await api.get("/Students");
+		return response.data;
+	},
 }
