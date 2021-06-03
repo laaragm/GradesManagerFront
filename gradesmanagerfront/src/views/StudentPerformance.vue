@@ -53,9 +53,9 @@ export default class StudentPerformance extends Vue{
 
 	studentsPerformance!: any;
 	students!: any;
-	selectedStudent!: any;
+	selectedStudent = null;
 	school = 5;
-	studentRadioGroup!: any;
+	studentRadioGroup = null;
 	loading = false;
 
 	@Watch('studentRadioGroup')
@@ -94,7 +94,7 @@ export default class StudentPerformance extends Vue{
 	getLevels(student: Student) {
 		const start = this.getFirstLevel(student);
 		const end = this.getLastLevel(student);
-		var data = new Array<any>();
+		var data = [];
 		for (let i = start; i < end; i++) {
 			data.push(i);
 		}
