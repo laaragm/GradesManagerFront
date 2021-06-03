@@ -107,7 +107,7 @@ export default class StudentPerformance extends Vue{
 <style scoped>
 .side-bar-card {
 	overflow-y: auto;
-	height: calc(100vh - 25px);
+	height: calc(100vh - 20px);
 }
 .side-bar {
 	overflow-y: hidden;
@@ -115,7 +115,6 @@ export default class StudentPerformance extends Vue{
 .radar-chart {
 	position: absolute;
 	top: 20%;
-	bottom: 30%;
 	left: 45%;
 }
 .loading {
