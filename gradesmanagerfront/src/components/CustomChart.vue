@@ -35,7 +35,8 @@ export default class CustomChart extends Vue {
 			chart: {
 				type: this.type,
 				backgroundColor: 'transparent',
-				height: this.height
+				height: this.height,
+				width: this.width
 			},
 			credits: {
 				enabled: false
@@ -74,6 +75,14 @@ export default class CustomChart extends Vue {
 				borderRadius: 3,
 				textColor: 'black',
 				backgroundColor: 'white'
+			},
+			pie: {
+				allowPointSelect: true,
+				cursor: 'pointer',
+				dataLabels: {
+					enabled: true,
+					format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+				}
 			},
 			series: [{
 				name: this.title,

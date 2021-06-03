@@ -1,6 +1,6 @@
 <template>
 	<div v-if="!loading">
-		<v-row no-gutters class="ma-5">
+		<v-row no-gutters class="ma-5 justify-center">
 			<v-col cols=4>
 				<v-card class="rounded-lg pa-3" elevation=3>
 					<v-row>
@@ -90,7 +90,7 @@
 				</v-card>
 			</v-col>
 
-			<v-col cols=8>
+			<v-col cols=7>
 				<v-card elevation=3 class="ml-5 rounded-lg">
 					<CustomChart 
 						:title="'Grade average by Discipline'" 
@@ -99,6 +99,16 @@
 						:type="'column'"
 						:color="'#664EAE'"
 						height="365"
+					/>
+				</v-card>
+				<v-card elevation=3 class="ml-5 rounded-lg mt-5">
+					<CustomChart 
+						:title="'Grade average by level'" 
+						:yAxis="Object.values(gradeAverageByLevel)" 
+						:xAxis="Object.keys(gradeAverageByLevel)" 
+						:type="'line'" 
+						:color="'#664EAE'"
+						height="500"
 					/>
 				</v-card>
 			</v-col>
@@ -126,13 +136,21 @@ export default class Home extends Vue{
 	@Action getClassroomsFromSchool!: (schoolID: number) => Promise<Classroom>
 	@Action getStudents!: () => Promise<Array<Student>>
 	@Action getDisciplinesGradeAverage!: (schoolID: number) => Promise<Array<XyChart>>
+	@Action getGradeAverageBySchoolLevels!: (schoolID: number) => Promise<any>
 
+	gradeAverageByLevel = null;
 	allSchools = null;
 	school = null;
 	classrooms = null;
 	loading = false;
 	students = null;
 	disciplinesGradeAverage = null;
+	
+	test = [
+		{name: 'Internet Explorer', y: 11.84},
+		{name: 'Firefox',y: 10.85},
+		{name: 'Edge',y: 4.67}
+	]
 
 	async mounted() {
 		this.loading = true;
@@ -141,6 +159,7 @@ export default class Home extends Vue{
 		this.classrooms = await this.getClassroomsFromSchool(this.school.id);
 		this.students = await this.getStudents();
 		this.disciplinesGradeAverage = await this.getDisciplinesGradeAverage(this.school.id);
+		this.gradeAverageByLevel = await this.getGradeAverageBySchoolLevels(this.school.id);
 		this.loading = false;
 	}
 

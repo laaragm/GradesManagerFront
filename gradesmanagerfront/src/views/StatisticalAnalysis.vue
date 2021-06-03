@@ -8,6 +8,8 @@
 						:yAxis="Object.values(gradeAverage)" 
 						:xAxis="Object.keys(gradeAverage)" 
 						:type="'column'" 
+						:color="'#664EAE'"
+						height="365"
 					/>
 					<!-- TODO: Possibilidade do cara escolher se ele quer um bar chart, column, line (é só trocar o type) -->
 				</v-card>
@@ -34,7 +36,6 @@ export default class StatisticalAnalysis extends Vue {
 
 	async mounted() {
 		this.gradeAverage = await this.getGradeAverageBySchoolLevels(this.schoolId);
-		console.log(this.gradeAverage);
 	}
 
 }
