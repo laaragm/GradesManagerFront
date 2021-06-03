@@ -1,8 +1,8 @@
 <template>
-	<div>
-		<v-row no-gutters class="justify-center mt-10">
-			<v-col cols=3 class="mt-5">
-				<v-radio-group v-model="studentRadioGroup">
+	<v-row no-gutters class="px-3 pt-3 side-bar">
+		<v-col cols=3 class="pr-3">
+			<v-card class="side-bar-card">
+				<v-radio-group v-model="studentRadioGroup" class="pl-5">
 					<v-radio
 						v-for="student in students" 
 						:key="student.id"
@@ -10,22 +10,22 @@
 						:value="student.id"
 					></v-radio>
 				</v-radio-group>
-			</v-col>
-			<v-col cols=6 class="mt-5 align-center">
-				<v-card elevation=3 class="mt-10">
-					<RadarChart 
-						:title="'Student Performance'" 
-						:values="Object.values(selectedStudent.gradeAverageByLevel)"
-						:label="selectedStudent.studentName"
-						:startPoint="getFirstLevel(selectedStudent)"
-						:lastPoint="getLastLevel(selectedStudent)"
-						:color="'#664EAE'"
-						height="500"
-					/>
-				</v-card>
-			</v-col>
-		</v-row>
-	</div>
+			</v-card>
+		</v-col>
+		<v-col cols=9 class="mt-0">
+			<v-card elevation=3 class="mt-10 radar-chart" width="600">
+				<RadarChart 
+					:title="'Student Performance'" 
+					:values="Object.values(selectedStudent.gradeAverageByLevel)"
+					:label="selectedStudent.studentName"
+					:startPoint="getFirstLevel(selectedStudent)"
+					:lastPoint="getLastLevel(selectedStudent)"
+					:color="'#664EAE'"
+					height="500"
+				/>			
+			</v-card>
+		</v-col>
+	</v-row>
 </template>
 
 <script lang="ts">
@@ -33,11 +33,13 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Action } from 'vuex-class'
 import RadarChart from '../components/RadarChart.vue'
 import { Level } from '../enums/Level'
+import CustomChart from '../components/CustomChart.vue'
 import { Student } from '../models/Student'
 
 @Component({
 	components: {
-		RadarChart
+		RadarChart,
+		CustomChart
 	}
 })
 export default class StudentPerformance extends Vue{
@@ -69,18 +71,45 @@ export default class StudentPerformance extends Vue{
 
 	async mounted() {
 		this.students = await this.getStudents();
+		this.studentRadioGroup = this.students[0].id;
 		await this.analyzePerformance(this.students[0].id);
 	}
 
 	async analyzePerformance(id: number) {
-		const studentsDTO = {
+		const student = {
 			students: [id],
 			school: this.school
 		}
-		this.studentsPerformance = await this.getStudentsPerformance(studentsDTO);
+		this.studentsPerformance = await this.getStudentsPerformance(student);
+		console.log(this.studentsPerformance)
 		this.selectedStudent = this.studentsPerformance[0];
-		this.studentRadioGroup = this.selectedStudent.id;
+	}
+
+	getLevels(student) {
+		const start = this.getFirstLevel(student);
+		const end = this.getLastLevel(student);
+		var data = []
+		for (let i = start; i < end; i++) {
+			data.push(i);
+		}
+		return data;
 	}
 
 }
 </script>
+
+<style scoped>
+.side-bar-card {
+	overflow-y: auto;
+	height: calc(100vh - 25px);
+}
+.side-bar {
+	overflow-y: hidden;
+}
+.radar-chart {
+	position: absolute;
+	top: 20%;
+	bottom: 30%;
+	left: 50%;
+}
+</style>
