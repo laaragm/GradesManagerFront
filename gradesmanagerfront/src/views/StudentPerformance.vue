@@ -13,8 +13,8 @@
 					</v-radio-group>
 				</v-card>
 			</v-col>
-			<v-col cols=9 class="mt-0">
-				<v-card elevation=3 class="mt-10 radar-chart" width="600">
+			<v-col cols=9 class="mt-0 mt-12 mb-12">
+				<v-card elevation=5 class="ml-12 mr-12">
 					<RadarChart 
 						:title="'Student Performance'" 
 						:values="Object.values(selectedStudent.gradeAverageByLevel)"
@@ -22,8 +22,9 @@
 						:startPoint="getFirstLevel(selectedStudent)"
 						:lastPoint="getLastLevel(selectedStudent)"
 						:color="'#664EAE'"
-						class="pt-5"
-					/>			
+						class="pt-5 mt-12"
+						:height="600"
+					/>
 				</v-card>
 			</v-col>
 		</v-row>
@@ -112,12 +113,7 @@ export default class StudentPerformance extends Vue{
 .side-bar {
 	overflow-y: hidden;
 }
-.radar-chart {
-	position: absolute;
-	top: 20%;
-	left: 45%;
-}
-.loading {
+.centralize {
 	position: absolute;
 	top: 50%;
 	left: 50%;
