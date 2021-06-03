@@ -28,4 +28,8 @@ export const actions: ActionTree<GradesManagerState, RootState> = {
 		const response = await api.get(`/Grades/disciplinesGradeAverage/${schoolID}`);
 		return response.data;
 	},
+	async getStudentCountPerLevel({ commit }, schoolID: number): Promise<any> {
+		const response = await api.get(`/ClassroomStudents/studentCountPerLevel/${schoolID}`);
+		return response.data;
+	},
 }

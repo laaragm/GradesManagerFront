@@ -35,8 +35,7 @@ export default class CustomChart extends Vue {
 			chart: {
 				type: this.type,
 				backgroundColor: 'transparent',
-				height: this.height,
-				width: this.width
+				height: this.height
 			},
 			credits: {
 				enabled: false
