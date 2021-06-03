@@ -24,4 +24,8 @@ export const actions: ActionTree<GradesManagerState, RootState> = {
 		const response = await api.get("/Students");
 		return response.data;
 	},
+	async getDisciplinesGradeAverage({ commit }, schoolID: number): Promise<any> {
+		const response = await api.get(`/Grades/disciplinesGradeAverage/${schoolID}`);
+		return response.data;
+	},
 }

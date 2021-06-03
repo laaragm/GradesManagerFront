@@ -20,27 +20,21 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Action } from 'vuex-class'
 import CustomChart from '../components/CustomChart.vue'
-import RadarChart from '../components/RadarChart.vue'
 
 @Component({
 	components: {
-		CustomChart,
-		RadarChart
+		CustomChart
 	}
 })
 export default class StatisticalAnalysis extends Vue {
 	@Action getGradeAverageBySchoolLevels!: (schoolID: number) => Promise<any>
 
 	gradeAverage = null;
+	schoolId = 5;
 
 	async mounted() {
-		const schoolId = 5;
-		this.gradeAverage = await this.getGradeAverageBySchoolLevels(schoolId);
+		this.gradeAverage = await this.getGradeAverageBySchoolLevels(this.schoolId);
 		console.log(this.gradeAverage);
-		const studentsDTO = {
-			students: [13],
-			school: 5
-		}
 	}
 
 }

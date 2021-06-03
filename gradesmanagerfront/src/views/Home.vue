@@ -89,6 +89,19 @@
 					</v-row>
 				</v-card>
 			</v-col>
+
+			<v-col cols=8>
+				<v-card elevation=3 class="ml-5 rounded-lg">
+					<CustomChart 
+						:title="'Grade average by Discipline'" 
+						:yAxis="disciplinesGradeAverage.values" 
+						:xAxis="disciplinesGradeAverage.categories"
+						:type="'column'"
+						:color="'#664EAE'"
+						height="365"
+					/>
+				</v-card>
+			</v-col>
 		</v-row>
 	</div>
 </template>
@@ -99,19 +112,27 @@ import { Action } from 'vuex-class'
 import { School } from '../models/School'
 import { Classroom } from '../models/Classroom'
 import { Student } from '../models/Student'
+import { XyChart } from '../models/XyChart'
 import { Level } from '../enums/Level'
+import CustomChart from '../components/CustomChart.vue'
 
-@Component
+@Component({
+	components: {
+		CustomChart
+	}
+})
 export default class Home extends Vue{
 	@Action getSchools!: () => Promise<Array<School>>
 	@Action getClassroomsFromSchool!: (schoolID: number) => Promise<Classroom>
 	@Action getStudents!: () => Promise<Array<Student>>
+	@Action getDisciplinesGradeAverage!: (schoolID: number) => Promise<Array<XyChart>>
 
 	allSchools = null;
 	school = null;
 	classrooms = null;
 	loading = false;
 	students = null;
+	disciplinesGradeAverage = null;
 
 	async mounted() {
 		this.loading = true;
@@ -119,6 +140,7 @@ export default class Home extends Vue{
 		this.school = this.allSchools[0];
 		this.classrooms = await this.getClassroomsFromSchool(this.school.id);
 		this.students = await this.getStudents();
+		this.disciplinesGradeAverage = await this.getDisciplinesGradeAverage(this.school.id);
 		this.loading = false;
 	}
 

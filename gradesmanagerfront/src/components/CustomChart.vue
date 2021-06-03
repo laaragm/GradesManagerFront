@@ -17,6 +17,8 @@ export default class CustomChart extends Vue {
 	@Prop() yAxis!: any[];
 	@Prop() xAxis!: any[];
 	@Prop() type!: string;
+	@Prop() color!: string;
+	@Prop() height!: number;
 
 	mounted() {
 		this.build();
@@ -31,39 +33,53 @@ export default class CustomChart extends Vue {
 		const highcharts = Highcharts as any;
 		highcharts.chart(this.title, {
 			chart: {
-				type: this.type
+				type: this.type,
+				backgroundColor: 'transparent',
+				height: this.height
+			},
+			credits: {
+				enabled: false
 			},
 			title: {
 				text: this.title,
-				align: 'center'
+				align: 'center',
+				color: 'white',
 			},
 			xAxis: {
 				categories: this.xAxis,
 				labels: {
 					rotation: -45,
 					style: {
-						fontSize: '13px',
-						fontFamily: 'Verdana, sans-serif'
+						color: 'white'
 					}
 				}
 			},
 			yAxis: {
 				min: 0,
+				style: {
+						color: 'white'
+					}
 			},
 			legend: {
-				enabled: false
+				enabled: false,
+			},
+				labels: {
+				overflow: 'justify'
 			},
 			tooltip: {
 				style: {
 					color: 'black'
 				},
 				borderColor: 'transparent',
-				borderRadius: 3
+				borderRadius: 3,
+				textColor: 'black',
+				backgroundColor: 'white'
 			},
 			series: [{
 				name: this.title,
 				data: this.yAxis,
-				type: this.type
+				type: this.type,
+				color: this.color
 			}]
 		});
 	}
