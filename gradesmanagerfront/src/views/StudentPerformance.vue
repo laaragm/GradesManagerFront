@@ -110,6 +110,6 @@ export default class StudentPerformance extends Vue{
 	position: absolute;
 	top: 20%;
 	bottom: 30%;
-	left: 50%;
+	left: 45%;
 }
 </style>
