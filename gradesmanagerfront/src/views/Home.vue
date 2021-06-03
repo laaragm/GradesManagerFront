@@ -146,12 +146,6 @@ export default class Home extends Vue{
 	students = null;
 	disciplinesGradeAverage = null;
 	
-	test = [
-		{name: 'Internet Explorer', y: 11.84},
-		{name: 'Firefox',y: 10.85},
-		{name: 'Edge',y: 4.67}
-	]
-
 	async mounted() {
 		this.loading = true;
 		this.allSchools = await this.getSchools();

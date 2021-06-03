@@ -20,6 +20,8 @@ export default class RadarChart extends Vue {
 	@Prop() label!: string;
 	@Prop() startPoint!: number;
 	@Prop() lastPoint!: number;
+	@Prop() color!: string;
+	@Prop() height!: number;
 
 	mounted() {
 		this.build();
@@ -34,10 +36,17 @@ export default class RadarChart extends Vue {
 		const highcharts = Highcharts as any;
 		highcharts.chart(this.title, {
 			chart: {
-				polar: true
+				polar: true,
+				backgroundColor: 'transparent',
+				height: this.height
+			},
+			credits: {
+				enabled: false
 			},
 			title: {
-				text: this.title
+				text: this.title,
+				align: 'center',
+				color: 'white',
 			},
 			pane: {
 				startAngle: 0,
@@ -49,10 +58,16 @@ export default class RadarChart extends Vue {
 				max: this.lastPoint + 1,
 				labels: {
 					format: 'Year {value}'
+				},
+				style: {
+					color: 'white'
 				}
 			},
 			yAxis: {
-				min: 0
+				min: 0,
+				style: {
+					color: 'white'
+				}
 			},
 			plotOptions: {
 				series: {
@@ -67,7 +82,8 @@ export default class RadarChart extends Vue {
 			series: [{
 				type: 'line',
 				name: this.label,
-				data: this.values
+				data: this.values,
+				color: this.color
 			}]
 		});
 	}

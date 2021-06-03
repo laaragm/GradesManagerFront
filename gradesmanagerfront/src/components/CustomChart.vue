@@ -57,14 +57,8 @@ export default class CustomChart extends Vue {
 			yAxis: {
 				min: 0,
 				style: {
-						color: 'white'
-					}
-			},
-			legend: {
-				enabled: false,
-			},
-				labels: {
-				overflow: 'justify'
+					color: 'white'
+				}
 			},
 			tooltip: {
 				style: {

@@ -1,15 +1,16 @@
 <template>
 	<div>
 		<v-row no-gutters class="justify-center mt-10" v-for="student in studentsPerformance" :key="student.studentID">
-			{{ student }}
 			<v-col cols=6 class="mt-5">
-				<v-card elevation=3>
+				<v-card elevation=3 class="mt-10">
 					<RadarChart 
 						:title="'Student Performance'" 
 						:values="Object.values(student.gradeAverageByLevel)"
 						:label="student.studentName"
 						:startPoint="getFirstLevel(student)"
 						:lastPoint="getLastLevel(student)"
+						:color="'#664EAE'"
+						height="500"
 					/>
 				</v-card>
 			</v-col>
@@ -22,6 +23,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Action } from 'vuex-class'
 import RadarChart from '../components/RadarChart.vue'
 import { Level } from '../enums/Level'
+import { Student } from '../models/Student'
 
 @Component({
 	components: {
@@ -30,8 +32,10 @@ import { Level } from '../enums/Level'
 })
 export default class StudentPerformance extends Vue{
 	@Action getStudentsPerformance!: (studentsDTO: any) => Promise<any>
+	@Action getStudents!: () => Promise<Array<Student>>
 
 	studentsPerformance = null;
+	students = null;
 
 	getFirstLevel(student: any) {
 		const level = Object.keys(student.gradeAverageByLevel);
@@ -50,7 +54,7 @@ export default class StudentPerformance extends Vue{
 			school: 5
 		}
 		this.studentsPerformance = await this.getStudentsPerformance(studentsDTO);
-		console.log(this.studentsPerformance);
+		this.students = await this.getStudents();
 	}
 
 }
