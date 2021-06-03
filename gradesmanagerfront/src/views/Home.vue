@@ -1,10 +1,10 @@
 <template>
-	<div v-if="!loading">
-		<v-row no-gutters class="ma-5 justify-center">
+	<div>
+		<v-row no-gutters class="ma-5 justify-center" v-if="!loading">
 			<v-col cols=4>
 				<v-card class="rounded-lg pa-3" elevation=3>
 					<v-row>
-						<v-col cols=8>
+						<v-col cols=12>
 							<v-card-text>
 								<div class="text--primary display-1 font-weight-bold"> 
 									{{ school.name }}
@@ -40,16 +40,6 @@
 									<span> {{ school.cnpj }}  </span>
 								</div>
 							</v-card-text>
-						</v-col>
-						<v-col cols=4>
-							<v-card 
-								class="text-center justify-center my-auto rounded-lg centralize primary" 
-								width="30%" 
-								height="20%" 
-								elevation=5
-							>
-								<div class="text--primary font-weight-bold pt-6"> {{ getNumberOfStudents() }}+ students </div>
-							</v-card>
 						</v-col>
 					</v-row>
 				</v-card>
@@ -113,6 +103,13 @@
 				</v-card>
 			</v-col>
 		</v-row>
+		<v-progress-circular
+			v-else
+			indeterminate
+			color="#664EAE"
+			size="70"
+			class="centralize"
+		></v-progress-circular>
 	</div>
 </template>
 
@@ -171,7 +168,7 @@ export default class Home extends Vue{
 .centralize {
 	position: absolute;
 	top: 50%;
-	bottom: 50%;
+	left: 50%;
 	transform: translate(-50%, -50%);
 }
 </style>

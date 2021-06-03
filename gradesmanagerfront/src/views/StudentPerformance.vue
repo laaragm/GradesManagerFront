@@ -1,31 +1,40 @@
 <template>
-	<v-row no-gutters class="px-3 pt-3 side-bar">
-		<v-col cols=3 class="pr-3">
-			<v-card class="side-bar-card">
-				<v-radio-group v-model="studentRadioGroup" class="pl-5">
-					<v-radio
-						v-for="student in students" 
-						:key="student.id"
-						:label="student.name"
-						:value="student.id"
-					></v-radio>
-				</v-radio-group>
-			</v-card>
-		</v-col>
-		<v-col cols=9 class="mt-0">
-			<v-card elevation=3 class="mt-10 radar-chart" width="600">
-				<RadarChart 
-					:title="'Student Performance'" 
-					:values="Object.values(selectedStudent.gradeAverageByLevel)"
-					:label="selectedStudent.studentName"
-					:startPoint="getFirstLevel(selectedStudent)"
-					:lastPoint="getLastLevel(selectedStudent)"
-					:color="'#664EAE'"
-					height="500"
-				/>			
-			</v-card>
-		</v-col>
-	</v-row>
+	<div>
+		<v-row no-gutters class="px-3 pt-3 side-bar" v-if="!loading">
+			<v-col cols=3 class="pr-3">
+				<v-card class="side-bar-card">
+					<v-radio-group v-model="studentRadioGroup" class="pl-5">
+						<v-radio
+							v-for="student in students" 
+							:key="student.id"
+							:label="student.name"
+							:value="student.id"
+						></v-radio>
+					</v-radio-group>
+				</v-card>
+			</v-col>
+			<v-col cols=9 class="mt-0">
+				<v-card elevation=3 class="mt-10 radar-chart" width="600">
+					<RadarChart 
+						:title="'Student Performance'" 
+						:values="Object.values(selectedStudent.gradeAverageByLevel)"
+						:label="selectedStudent.studentName"
+						:startPoint="getFirstLevel(selectedStudent)"
+						:lastPoint="getLastLevel(selectedStudent)"
+						:color="'#664EAE'"
+						height="500"
+					/>			
+				</v-card>
+			</v-col>
+		</v-row>
+		<v-progress-circular
+			v-else
+			indeterminate
+			color="#664EAE"
+			size="70"
+			class="loading"
+		></v-progress-circular>
+	</div>
 </template>
 
 <script lang="ts">
@@ -51,10 +60,10 @@ export default class StudentPerformance extends Vue{
 	selectedStudent = null;
 	school = 5;
 	studentRadioGroup = null;
+	loading = false;
 
 	@Watch('studentRadioGroup')
 	onChangeStudent() {
-		console.log(this.studentRadioGroup);
 		this.analyzePerformance(this.studentRadioGroup);
 	}
 
@@ -70,9 +79,11 @@ export default class StudentPerformance extends Vue{
 	}
 
 	async mounted() {
+		this.loading = true;
 		this.students = await this.getStudents();
 		this.studentRadioGroup = this.students[0].id;
 		await this.analyzePerformance(this.students[0].id);
+		this.loading = false;
 	}
 
 	async analyzePerformance(id: number) {
@@ -81,7 +92,6 @@ export default class StudentPerformance extends Vue{
 			school: this.school
 		}
 		this.studentsPerformance = await this.getStudentsPerformance(student);
-		console.log(this.studentsPerformance)
 		this.selectedStudent = this.studentsPerformance[0];
 	}
 
@@ -111,5 +121,11 @@ export default class StudentPerformance extends Vue{
 	top: 20%;
 	bottom: 30%;
 	left: 45%;
+}
+.loading {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 </style>

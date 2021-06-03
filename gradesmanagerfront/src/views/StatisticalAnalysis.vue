@@ -1,33 +1,42 @@
 <template>
 	<div>
-		<v-row no-gutters class="justify-center mt-12">
-			<v-col cols=6>
-				<v-card elevation=3>
-					<CustomChart 
-						:title="'Grade average by level'" 
-						:yAxis="Object.values(gradeAverage)" 
-						:xAxis="Object.keys(gradeAverage)" 
-						:type="'column'" 
-						:color="'#664EAE'"
-						height="365"
-					/>
-				</v-card>
-			</v-col>
-		</v-row>
-		<v-row no-gutters class="justify-center mt-12">
-			<v-col cols=6>
-				<v-card elevation=3>
-					<CustomChart 
-						:title="'Student count per level'" 
-						:yAxis="studentCountPerLevel.values" 
-						:xAxis="studentCountPerLevel.categories" 
-						:type="'bar'" 
-						:color="'#664EAE'"
-						height="365"
-					/>
-				</v-card>
-			</v-col>
-		</v-row>
+		<div v-if="!loading">
+			<v-row no-gutters class="justify-center mt-12">
+				<v-col cols=6>
+					<v-card elevation=3>
+						<CustomChart 
+							:title="'Grade average by level'" 
+							:yAxis="Object.values(gradeAverage)" 
+							:xAxis="Object.keys(gradeAverage)" 
+							:type="'column'" 
+							:color="'#664EAE'"
+							height="365"
+						/>
+					</v-card>
+				</v-col>
+			</v-row>
+			<v-row no-gutters class="justify-center mt-12">
+				<v-col cols=6>
+					<v-card elevation=3>
+						<CustomChart 
+							:title="'Student count per level'" 
+							:yAxis="studentCountPerLevel.values" 
+							:xAxis="studentCountPerLevel.categories" 
+							:type="'bar'" 
+							:color="'#664EAE'"
+							height="365"
+						/>
+					</v-card>
+				</v-col>
+			</v-row>
+		</div>
+		<v-progress-circular
+			v-else
+			indeterminate
+			color="#664EAE"
+			size="70"
+			class="centralize"
+		></v-progress-circular>
 	</div>
 </template>
 
@@ -48,10 +57,13 @@ export default class StatisticalAnalysis extends Vue {
 	gradeAverage = null;
 	studentCountPerLevel = null;
 	schoolId = 5;
+	loading = false;
 
 	async mounted() {
+		this.loading = true;
 		this.gradeAverage = await this.getGradeAverageBySchoolLevels(this.schoolId);
 		this.studentCountPerLevel = await this.getStudentCountPerLevel(this.schoolId);
+		this.loading = false;
 	}
 
 }
@@ -61,7 +73,7 @@ export default class StatisticalAnalysis extends Vue {
 .centralize {
 	position: absolute;
 	top: 50%;
-	bottom: 50%;
+	left: 50%;
 	transform: translate(-50%, -50%);
 }
 </style>
