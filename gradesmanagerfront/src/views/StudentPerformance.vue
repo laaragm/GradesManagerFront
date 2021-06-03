@@ -13,8 +13,8 @@
 					</v-radio-group>
 				</v-card>
 			</v-col>
-			<v-col cols=9 class="mt-0 mt-12 mb-12">
-				<v-card elevation=5 class="ml-12 mr-12">
+			<v-col cols=9>
+				<v-card elevation=5 class="centralize pb-12">
 					<RadarChart 
 						:title="'Student Performance'" 
 						:values="Object.values(selectedStudent.gradeAverageByLevel)"
@@ -114,9 +114,11 @@ export default class StudentPerformance extends Vue{
 	overflow-y: hidden;
 }
 .centralize {
-	position: absolute;
+	display: flex;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+	align-items: center;
+	justify-content: center;
 }
 </style>
